@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
+        <!-- good default just in case it's not set in CI/CD variables -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- various maven plugins -->
+        <version.plugin.buildhelper     >3.0.0</version.plugin.buildhelper>
+        <version.plugin.buildnumber     >1.4</version.plugin.buildnumber>
+        <version.plugin.checkstyle      >3.1.0</version.plugin.checkstyle>
+        <version.plugin.clean           >3.0.0</version.plugin.clean>
+        <version.plugin.compiler        >3.8.1</version.plugin.compiler>
+        <version.plugin.deploy          >3.0.0-M1</version.plugin.deploy>
+        <version.plugin.enforcer        >3.0.0-M3</version.plugin.enforcer>
+        <version.plugin.install         >3.0.0-M1</version.plugin.install>
+        <version.plugin.jacoco          >0.8.5</version.plugin.jacoco>
+        <version.plugin.jar             >3.2.0</version.plugin.jar>
+        <version.plugin.javadoc         >3.1.1</version.plugin.javadoc>
+        <version.plugin.resources       >3.1.0</version.plugin.resources>
+        <version.plugin.shade           >3.2.0</version.plugin.shade>
+        <version.plugin.source          >3.2.0</version.plugin.source>
+        <version.plugin.surefire        >3.0.0-M4</version.plugin.surefire>
+        <version.plugin.openapi-codegen >6.0.0</version.plugin.openapi-codegen>
+
+        <!-- library versions -->
+        <version.assertj                        >3.15.0</version.assertj>
+        <version.junit                          >5.5.2</version.junit>
+        <version.slf4j                          >1.7.36</version.slf4j>
+        <version.smar.util-misc                 >2.4.0</version.smar.util-misc>
+        <version.jackson                        >2.13.3</version.jackson>
+        <version.swagger-parser                 >2.1.1</version.swagger-parser>
+        <version.openapitools-jackson-nullable  >0.2.3</version.openapitools-jackson-nullable>
+    </properties>
+
+    <packaging  >jar</packaging>
+    <name       >etsy-api</name>
+    <groupId    >com.ronreynolds</groupId>
+    <artifactId >etsy-api</artifactId>
+    <version    >0.1.0</version>
+
+    <dependencies>
+        <!-- Jackson JSON generator/parser -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${version.jackson}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${version.jackson}</version>
+        </dependency>
+
+        <!-- OpenAPI annotations -->
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>${version.swagger-parser}</version>
+        </dependency>
+
+        <!-- OpenAPI org.openapitools.jackson.nullable.* -->
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${version.openapitools-jackson-nullable}</version>
+        </dependency>
+
+        <!-- javax.annotation -->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>annotations</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <!-- unit test files -->
+        <!-- openapi gen unit-tests are JUnit-4 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- our unit-tests are JUnit-5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.23.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${version.slf4j}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+            openapi code-gen
+            resources:
+            https://github.com/OpenAPITools/openapi-generator
+            https://openapi-generator.tech/docs/plugins/
+            https://openapi-generator.tech/docs/generators/java/ - behavior of Java generator
+            https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin - args for generator
+            https://github.com/OpenAPITools/openapi-generator
+            https://javahowtos.com/guides/118-tools/434-java-rest-client-from-swagger-file-with-openapi-generator.html
+            https://www.baeldung.com/java-openapi-generator-server
+            https://openapi-generator.tech/docs/customization/
+            https://openapi-generator.tech/docs/debugging/
+            -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${version.plugin.openapi-codegen}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- has to be updated manually whenever a new version of the logging-service is created -->
+                            <inputSpec>${project.basedir}/src/main/resources/etsy-openapi-3.0.0.json</inputSpec>
+                            <generatorName>java</generatorName>
+<!--                            <skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>-->
+<!--                            <typeMappings>integer=Long,int=Long</typeMappings>  &lt;!&ndash; use Long for all integer types &ndash;&gt;-->
+                            <configOptions> <!-- args to generator (as opposed to args to plugin) -->
+                                <sourceFolder       >src/main/java</sourceFolder>
+                                <apiPackage         >com.ronreynolds.etsy.api</apiPackage>
+                                <modelPackage       >com.ronreynolds.etsy.api.model</modelPackage>
+                                <generateApiTests   >false</generateApiTests>
+                                <library            >native</library> <!-- JDK HTTP client -->
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- standard Java compiler plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.plugin.compiler}</version>
+            </plugin>
+
+            <!-- generates uber all-in-one client jar with dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${version.plugin.shade}</version>
+                <configuration>
+                    <!-- put your configurations here -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+<!--
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${version.plugin.clean}</version>
+                </plugin>
+                &lt;!&ndash; see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging &ndash;&gt;
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.plugin.resources}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.plugin.compiler}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.plugin.surefire}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${version.plugin.install}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${version.plugin.deploy}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+-->
+    </build>
+</project>
