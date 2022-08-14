@@ -316,6 +316,7 @@
                                     },
                                     "shipping_profile_id": {
                                         "type": "integer",
+                                        "format": "int64",
                                         "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                                         "nullable": true,
                                         "minimum": 1
@@ -650,7 +651,7 @@
                                     "Inventory"
                                 ]
                             },
-                            "default": ""
+                            "default": [""]
                         }
                     }
                 ],
@@ -839,7 +840,7 @@
                                     "Inventory"
                                 ]
                             },
-                            "default": ""
+                            "default": [""]
                         }
                     }
                 ],
@@ -2696,7 +2697,7 @@
                                     "Inventory"
                                 ]
                             },
-                            "default": ""
+                            "default": [""]
                         }
                     }
                 ],
@@ -3770,6 +3771,7 @@
                                     },
                                     "shipping_profile_id": {
                                         "type": "integer",
+                                        "format": "int64",
                                         "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                                         "nullable": true,
                                         "minimum": 1
@@ -4076,6 +4078,7 @@
                                     },
                                     "shipping_profile_id": {
                                         "type": "integer",
+                                        "format": "int64",
                                         "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                                         "nullable": true,
                                         "minimum": 1
@@ -7389,6 +7392,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -7479,6 +7483,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -7576,6 +7581,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -7718,6 +7724,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -7866,6 +7873,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -7990,6 +7998,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -8091,6 +8100,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -8263,6 +8273,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -8423,6 +8434,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -8522,6 +8534,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the shipping profile.",
                             "minimum": 1
                         }
@@ -8623,6 +8636,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
+                            "format": "int64",
                             "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                             "minimum": 1
                         }
@@ -9729,6 +9743,7 @@
                     },
                     "shipping_profile_id": {
                         "type": "integer",
+                        "format": "int64",
                         "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                         "nullable": true,
                         "minimum": 1
@@ -10122,6 +10137,7 @@
                     },
                     "shipping_profile_id": {
                         "type": "integer",
+                        "format": "int64",
                         "description": "The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.",
                         "nullable": true,
                         "minimum": 1
@@ -10335,6 +10351,7 @@
                 "properties": {
                     "shipping_profile_id": {
                         "type": "integer",
+                        "format": "int64",
                         "description": "The numeric ID of the shipping profile.",
                         "minimum": 1
                     },
@@ -10433,6 +10450,7 @@
                     },
                     "shipping_profile_id": {
                         "type": "integer",
+                        "format": "int64",
                         "description": "The numeric ID of the shipping profile.",
                         "minimum": 1
                     },
@@ -10498,6 +10516,7 @@
                 "properties": {
                     "shipping_profile_id": {
                         "type": "integer",
+                        "format": "int64",
                         "description": "The numeric ID of the base shipping profile.",
                         "minimum": 1
                     },
@@ -11477,6 +11496,7 @@
                     },
                     "shipping_profile_id": {
                         "type": "integer",
+                        "format": "int64",
                         "description": "The ID of the shipping profile selected for this listing.",
                         "nullable": true,
                         "minimum": 1
@@ -12029,6 +12049,7 @@
                 "properties": {
                     "application_id": {
                         "type": "integer",
+                        "format": "int64",
                         "description": "The authenticated application's ID",
                         "minimum": 1
                     }
